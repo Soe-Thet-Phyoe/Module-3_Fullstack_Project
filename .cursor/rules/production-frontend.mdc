@@ -1,0 +1,39 @@
+---
+description: Production engineering standards for the admin and client Next.js apps
+globs: admin/**/*.{ts,tsx}, client/**/*.{ts,tsx}
+alwaysApply: false
+---
+
+# Production Frontend Engineering
+
+Apply these standards to both `admin` and `client`. Treat them as independently maintained apps with distinct UX needs; follow each app's existing structure, dependencies, and conventions.
+
+## Architecture and Next.js
+
+- Before changing code, inspect the relevant feature and reuse existing components, services, hooks, types, and utilities. Make the smallest complete change; avoid duplicate logic, premature abstractions, and unrelated refactors.
+- Keep routing and page composition in `app/`; separate feature logic when that improves clarity. Create folders only as needed.
+- Use Server Components by default. Add `"use client"` only for interactivity, browser APIs, or client-only libraries, and keep that boundary small. Avoid effects and duplicated state when derived values, event handlers, or server rendering suffice.
+- Follow the installed Next.js version. Read relevant guides under that app's `node_modules/next/dist/docs/` before coding, as required by its `AGENTS.md`.
+- Use Next.js `Link` for internal navigation and metadata APIs for page metadata. Prefer framework conventions over custom routing solutions.
+
+## TypeScript and API contracts
+
+- Use TypeScript throughout. Prefer clear, reusable types; avoid `any`, unsafe assertions, and assumptions about nullable values or API response fields.
+- Django is the source of truth for business logic, data, authentication, validation, and permissions. Communicate through verified APIs; never connect frontend code directly to PostgreSQL or expose server secrets.
+- Reuse the app's API client and service patterns. Verify endpoints and response contracts before relying on them. Handle loading, empty, success, error, and pending states; don't fabricate production data or silently swallow failures.
+- Choose data fetching and caching based on freshness and privacy. Never put private or user-specific data in shared caches. Use client-side query/state libraries only when their capabilities are needed.
+
+## UI, accessibility, and responsive behavior
+
+- Follow the app's existing design system and Shadcn/Radix/Tailwind conventions. Prefer existing components and tokens; keep visual hierarchy, spacing, typography, and icons consistent.
+- Keep admin workflows information-dense and efficient. Keep client journeys clear, responsive, and customer-friendly. Do not force one app's UX patterns into the other.
+- Build mobile-first layouts that remain usable across screen sizes. Avoid fixed widths and horizontal overflow; preserve essential functionality on small screens.
+- Use semantic HTML, accessible names and labels, logical headings, keyboard support, visible focus, sufficient contrast, and reduced-motion support. Use ARIA only where needed.
+- Use purposeful, restrained animation. Prefer CSS for simple transitions, avoid layout-shifting effects, and respect reduced-motion preferences.
+
+## Security, quality, and changes
+
+- Treat client data as untrusted. Backend permissions are authoritative; UI checks are not security controls. Avoid unsafe HTML, sensitive data in browser storage or logs, and technical details in user-facing errors.
+- Keep components focused and readable. Avoid unnecessary dependencies, client JavaScript, memoization, state synchronization, and abstractions.
+- Preserve existing behavior unless the requested change requires otherwise. Do not invent routes, business rules, or authentication architecture; resolve material unknowns by inspecting the code or asking.
+- After changes, review affected code and run relevant checks when requested or appropriate. Report checks accurately; do not claim unrun tests, lint, or builds passed.

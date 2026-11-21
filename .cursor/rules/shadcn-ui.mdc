@@ -1,0 +1,12 @@
+---
+description: Use shadcn/ui as the component system for frontend interfaces
+globs: client/**/*.tsx, admin/**/*.tsx
+alwaysApply: false
+---
+
+# Frontend UI Components
+
+- Use shadcn/ui components for interface elements in the client and admin apps. Compose them to build page-specific UI.
+- Check the current app for an existing component before using it. If a needed component is missing, follow that app's shadcn/ui setup and add-component workflow, then import it through the configured alias.
+- Add a custom UI component only when shadcn/ui does not provide a suitable building block.
+- Do not assume shadcn/ui is initialized. Check for the app's `components.json` and dependencies; initialize it following the Next.js existing-project guide before adding shadcn/ui components when needed.
