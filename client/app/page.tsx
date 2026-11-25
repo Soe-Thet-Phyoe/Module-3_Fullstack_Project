@@ -1,69 +1,83 @@
-import Image from "next/image";
+import { Suspense } from "react";
+import Link from "next/link";
+import {
+  ArrowDownRight,
+  ArrowRight,
+  AudioLines,
+  ChevronRight,
+  CircleCheck,
+  Zap,
+} from "lucide-react";
+
+import { buttonVariants } from "@/components/ui/button";
+import { StorefrontShell } from "@/components/storefront-shell";
+import { cn } from "@/lib/utils";
+
+import HomeCatalog from "./home-catalog";
+
+function DeviceArtwork({ kind, color = "blue" }: { kind: string; color?: string }) {
+  return (
+    <div className={`device-art device-${kind} device-color-${color}`} aria-hidden="true">
+      {kind === "laptop" ? (
+        <><div className="device-laptop-screen"><div className="device-screen-glow" /><div className="device-camera" /></div><div className="device-laptop-base" /></>
+      ) : kind === "tablet" ? (
+        <div className="device-tablet-frame"><div className="device-tablet-screen"><div className="tablet-orbit" /><div className="tablet-sun" /></div><div className="device-tablet-camera" /></div>
+      ) : kind === "watch" ? (
+        <div className="watch-shape"><div className="watch-strap watch-strap-top" /><div className="watch-face"><span className="watch-time">09<span>:</span>41</span><span className="watch-signal"><i /><i /><i /></span></div><div className="watch-strap watch-strap-bottom" /></div>
+      ) : (
+        <div className="device-phone-frame"><div className="device-phone-screen"><div className="phone-screen-glow" /><div className="phone-camera-island"><i /><i /><i /></div><div className="phone-screen-date">MONDAY<br /><b>09:41</b></div><span className="phone-screen-weather">24° &nbsp; Sunny</span></div><div className="device-phone-button" /></div>
+      )}
+    </div>
+  );
+}
 
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
+    <StorefrontShell>
+      <main>
+        <section className="hero-section">
+          <div className="hero-grid">
+            <div className="hero-copy">
+              <span className="eyebrow"><span className="eyebrow-dot" /> YOUR NEXT FAVORITE THING</span>
+              <h1 aria-label="Technology that moves with you">Technology<br />that <span>moves</span><br />with you.</h1>
+              <p className="hero-description">The little upgrades that make a big difference. Meet your new everyday essentials, thoughtfully picked for the way you live.</p>
+              <div className="hero-actions">
+                <Link href="/shop" className={cn(buttonVariants(), "hero-button")}>Find your next favorite <ArrowRight aria-hidden="true" size={17} /></Link>
+                <a href="#categories" className="text-link">Take a look around <ArrowDownRight aria-hidden="true" size={16} /></a>
+              </div>
+              <div className="hero-proof"><div className="proof-avatars"><span>M</span><span>3</span><span>+</span></div><p><b>Better tech, better days.</b><br />Picked with a little more care.</p></div>
+            </div>
+            <div className="hero-art-wrap" aria-label="Illustration of a laptop, smartphone, and smartwatch">
+              <div className="hero-art-backdrop"><div className="hero-orbit hero-orbit-one" /><div className="hero-orbit hero-orbit-two" /><span className="hero-art-spark spark-one">✳</span><span className="hero-art-spark spark-two">✦</span><span className="hero-art-spark spark-three">✳</span>
+                <div className="hero-device hero-laptop"><DeviceArtwork kind="laptop" color="blue" /></div>
+                <div className="hero-device hero-phone"><DeviceArtwork kind="phone" color="violet" /></div>
+                <div className="hero-device hero-watch"><DeviceArtwork kind="watch" color="dark" /></div>
+                <div className="hero-floating-note"><span className="note-icon"><Zap size={16} fill="currentColor" /></span><span><b>Made for your everyday</b><small>One good choice at a time</small></span></div>
+                <div className="hero-product-tag"><span className="tag-pulse" /> THE GOOD STUFF, RIGHT HERE</div>
+              </div>
+            </div>
+            <span className="hero-index">01 — 03</span>
+          </div>
+          <div className="hero-bottom-line"><span>GOOD TECH, GOOD ENERGY</span><span>SCROLL TO EXPLORE <ChevronRight aria-hidden="true" size={14} /></span></div>
+        </section>
+
+        <Suspense fallback={
+          <section id="categories" className="category-section section-wrap">
+            <p role="status">Loading the catalog…</p>
+          </section>
+        }>
+          <HomeCatalog />
+        </Suspense>
+
+        <section className="promise-section section-wrap" id="why-m3">
+          <div className="promise-art"><div className="promise-disc"><div className="promise-ring" /><div className="promise-spark">✳</div><span className="promise-orbit-label">THOUGHTFULLY PICKED · ALWAYS</span></div><div className="promise-sticker">A little<br />more <span>care.</span></div></div>
+          <div className="promise-copy"><span className="eyebrow section-eyebrow">THE M-3 DIFFERENCE</span><h2>Not just more tech.<br /><span>Better picks.</span></h2><p>There’s a lot of tech out there. We make it easier to find the good stuff: useful, lovely to live with, and ready for whatever’s next.</p><div className="promise-points"><div><span className="promise-check"><CircleCheck aria-hidden="true" size={18} /></span><span><b>Picked with purpose</b><small>Good design meets everyday usefulness.</small></span></div><div><span className="promise-check"><CircleCheck aria-hidden="true" size={18} /></span><span><b>Here for the long run</b><small>Gear that feels right, today and tomorrow.</small></span></div></div><Link href="/shop" className="promise-link">Get to know your next favorite <ArrowRight aria-hidden="true" size={17} /></Link></div>
+        </section>
+
+        <section className="closing-cta">
+          <div className="closing-cta-inner"><span className="eyebrow cta-eyebrow"><AudioLines aria-hidden="true" size={15} /> READY WHEN YOU ARE</span><h2>Life’s better with<br />good <span>tech.</span></h2><p>Go on. Find your next favorite.</p><Link href="/shop" className={cn(buttonVariants(), "cta-button")}>Explore the shop <ArrowRight aria-hidden="true" size={17} /></Link><span className="cta-spark cta-spark-one">✳</span><span className="cta-spark cta-spark-two">✦</span><span className="cta-orbit" /></div>
+        </section>
       </main>
-    </div>
+    </StorefrontShell>
   );
 }

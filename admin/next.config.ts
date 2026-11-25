@@ -1,7 +1,7 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  ...(process.env.DASHBOARD_BROWSER_TEST === "1" && { distDir: ".next/dashboard-browser" }),
   experimental: {
     agentFeedback: true,
   },
